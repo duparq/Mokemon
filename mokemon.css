@@ -1,0 +1,32 @@
+
+/* vbox { */
+/*  border: 2px solid red; */
+/*     padding: 5px; */
+/* } */
+
+/* hbox { */
+/*     border: 2px solid green; */
+/*     padding: 0px; */
+/* } */
+
+
+box {
+    border: 2px solid rgba(0,0,0,0);
+    /* opacity: 0.5 ; */
+    padding: 0px;
+}
+
+/* frame { */
+/*     border: 2px solid blue; */
+/*     padding: 5px; */
+/* } */
+
+/* combobox { */
+/*  border: 2px solid magenta; */
+/* } */
+
+
+/* image { */
+/*     border: 2px solid black; */
+/*     /\* padding: 0px; *\/ */
+/* } */

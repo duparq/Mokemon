@@ -1,0 +1,16 @@
+<svg height="48" width="48"
+     style="font-size:28px;font-weight:bold;font-family:DejaVu Sans;text-anchor:middle;fill:black;stroke:none">
+  <defs>
+    <linearGradient
+	id="LG1"
+	gradientUnits="userSpaceOnUse"
+	x1="4" y1="4" x2="44" y2="44">
+      <stop style="stop-color:#cccccc;stop-opacity:1;" offset="0" />
+      <stop style="stop-color:#ffffff;stop-opacity:1;" offset="1" />
+    </linearGradient>
+  </defs>
+
+  <rect style="fill:url(#LG1);stroke:#707070;stroke-width:1" x="4" y="4" width="40" height="40" rx="4" ry="4" />
+  <text x="24" y="34">
+  </text>
+</svg>

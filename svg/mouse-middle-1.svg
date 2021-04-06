@@ -1,0 +1,5 @@
+<svg height="48" width="40">
+  <g style="fill:yellow;stroke:black;stroke-width:2">
+    <path d="M 16 12 a 4 6 0 0 1 8 0   4 6 0 0 1 -8 0" />
+  </g>
+</svg>

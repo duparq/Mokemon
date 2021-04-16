@@ -1,0 +1,23 @@
+<svg height="48" width="58"
+     style="fill:none;stroke:black;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
+  <defs>
+    <linearGradient
+	id="LG1"
+	gradientUnits="userSpaceOnUse"
+	x1="4" y1="4" x2="54" y2="44">
+      <stop style="stop-color:#cccccc;stop-opacity:1;" offset="0" />
+      <stop style="stop-color:#ffffff;stop-opacity:1;" offset="1" />
+    </linearGradient>
+  </defs>
+
+  <rect style="fill:url(#LG1);stroke:#707070;stroke-width:1"
+	x="4" y="4" width="50" height="40" rx="4" ry="4" />
+  <text x="6" y="30" style="font-size:20px;fill:black;stroke:none;font-family:DejaVu
+	    Sans Narrow;font-stretch:ultra-condensed;">
+    &#x25A4;
+  </text>
+  <text x="24" y="30" style="font-size:12px;fill:black;stroke:none;font-family:DejaVu
+	    Sans Narrow;font-stretch:ultra-condensed;letter-spacing:-1px;">
+    Menu
+  </text>
+</svg>

@@ -1,6 +1,5 @@
 <svg height="48" width="48"
-     style="font-size:28px;font-family:DejaVu Sans;text-anchor:middle;fill:black;stroke:none">
-  <!-- letter-spacing:-1px; -->
+     style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4">
   <defs>
     <linearGradient
 	id="LG1"
@@ -13,7 +12,5 @@
 
   <rect style="fill:url(#LG1);stroke:#707070;stroke-width:1"
 	x="4" y="4" width="40" height="40" rx="4" ry="4" />
-  <text x="24" y="34">
-    []
-  </text>
+  <path d="m 8,16 10,0" />
 </svg>

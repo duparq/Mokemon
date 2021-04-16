@@ -1,18 +1,22 @@
-<svg height="48" width="58" >
+<svg height="48" width="88">
   <defs>
     <linearGradient
 	id="LG1"
 	gradientUnits="userSpaceOnUse"
-	x1="4" y1="4" x2="44" y2="54">
+	x1="4" y1="4" x2="84" y2="44">
       <stop style="stop-color:#cccccc;stop-opacity:1;" offset="0" />
       <stop style="stop-color:#ffffff;stop-opacity:1;" offset="1" />
     </linearGradient>
   </defs>
 
   <rect style="fill:url(#LG1);stroke:#707070;stroke-width:1"
-	x="4" y="4" width="50" height="40" rx="4" ry="4" />
-  <text x="6" y="29" style="font-size:14px;fill:black;stroke:none;font-family:DejaVu
+	x="4" y="4" width="80" height="40" rx="4" ry="4" />
+  <text x="8" y="24" style="font-size:20px;fill:black;stroke:none;font-family:DejaVu
 	    Sans Narrow;font-stretch:ultra-condensed;">
-    &#201;chap
+    0
+  </text>
+  <text x="8" y="37" style="font-size:11px;fill:black;stroke:none;font-family:DejaVu
+	    Sans Narrow;font-stretch:ultra-condensed;">
+    Inser
   </text>
 </svg>

@@ -1,5 +1,5 @@
 <svg height="48" width="48" 
-     style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4" >
+     style="fill:none;stroke:black;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;">
   <defs>
     <linearGradient
 	id="LG1"
@@ -13,5 +13,5 @@
   <rect style="fill:url(#LG1);stroke:#707070;stroke-width:1"
 	x="4" y="4" width="40" height="40" rx="4" ry="4" />
   <path d="m 24,36 0,-24" />
-  <path d="m 24,36 4,-4 -8,0 z" />
+  <path style="fill:black;" d="m 24,36 4,-6 -8,0 z" />
 </svg>

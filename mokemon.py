@@ -82,8 +82,6 @@ class Modifier(Gtk.Image):
 class App:
   def __init__(self):
 
-    self.show_all_keys = True
-
     #  Used paths are relative to this file's directory
     #
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -172,6 +170,53 @@ class App:
     self.pixbufs["KEY_UP"] = Gtk.Image(file='svg/up.svg').get_pixbuf()
     self.pixbufs["KEY_RIGHT"] = Gtk.Image(file='svg/right.svg').get_pixbuf()
     self.pixbufs["KEY_DOWN"] = Gtk.Image(file='svg/down.svg').get_pixbuf()
+
+    self.pixbufs["KEY_KP_INSER"] = Gtk.Image(file='svg/kp_inser.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_END"] = Gtk.Image(file='svg/kp_end.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_DOWN"] = Gtk.Image(file='svg/kp_down.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_PAGE_DOWN"] = Gtk.Image(file='svg/kp_pagedn.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_LEFT"] = Gtk.Image(file='svg/kp_left.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_BEGIN"] = Gtk.Image(file='svg/kp_begin.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_RIGHT"] = Gtk.Image(file='svg/kp_right.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_HOME"] = Gtk.Image(file='svg/kp_home.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_UP"] = Gtk.Image(file='svg/kp_up.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_PRIOR"] = Gtk.Image(file='svg/kp_pageup.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_DELETE"] = Gtk.Image(file='svg/kp_delete.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_ENTER"] = Gtk.Image(file='svg/kp_enter.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_ADD"] = Gtk.Image(file='svg/kp_add.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_SUBTRACT"] = Gtk.Image(file='svg/kp_subtract.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_MULTIPLY"] = Gtk.Image(file='svg/kp_multiply.svg').get_pixbuf()
+    self.pixbufs["KEY_KP_DIVIDE"] = Gtk.Image(file='svg/kp_divide.svg').get_pixbuf()
+    self.pixbufs["KEY_NUM_LOCK"] = Gtk.Image(file='svg/numlock.svg').get_pixbuf()
+
+    self.pixbufs["KEY_TWOSUPERIOR"] = Gtk.Image(file='svg/twosuperior.svg').get_pixbuf()
+    self.pixbufs["KEY_AMPERSAND"] = Gtk.Image(file='svg/ampersand.svg').get_pixbuf()
+    self.pixbufs["KEY_EACUTE"] = Gtk.Image(file='svg/eacute.svg').get_pixbuf()
+    self.pixbufs["KEY_QUOTEDBL"] = Gtk.Image(file='svg/quotedbl.svg').get_pixbuf()
+    self.pixbufs["KEY_QUOTERIGHT"] = Gtk.Image(file='svg/quoteright.svg').get_pixbuf()
+    self.pixbufs["KEY_PARENLEFT"] = Gtk.Image(file='svg/parenleft.svg').get_pixbuf()
+    self.pixbufs["KEY_MINUS"] = Gtk.Image(file='svg/minus.svg').get_pixbuf()
+    self.pixbufs["KEY_EGRAVE"] = Gtk.Image(file='svg/egrave.svg').get_pixbuf()
+    self.pixbufs["KEY_UNDERSCORE"] = Gtk.Image(file='svg/underscore.svg').get_pixbuf()
+    self.pixbufs["KEY_CCEDILLA"] = Gtk.Image(file='svg/ccedilla.svg').get_pixbuf()
+    self.pixbufs["KEY_AGRAVE"] = Gtk.Image(file='svg/agrave.svg').get_pixbuf()
+    self.pixbufs["KEY_PARENRIGHT"] = Gtk.Image(file='svg/parenright.svg').get_pixbuf()
+    self.pixbufs["KEY_EQUAL"] = Gtk.Image(file='svg/equal.svg').get_pixbuf()
+
+    self.pixbufs["KEY_RETURN"] = Gtk.Image(file='svg/return.svg').get_pixbuf()
+    self.pixbufs["KEY_DUNNO"] = Gtk.Image(file='svg/dunno.svg').get_pixbuf()
+    self.pixbufs["KEY_DOLLAR"] = Gtk.Image(file='svg/dollar.svg').get_pixbuf()
+    self.pixbufs["KEY_UGRAVE"] = Gtk.Image(file='svg/ugrave.svg').get_pixbuf()
+    self.pixbufs["KEY_ASTERISK"] = Gtk.Image(file='svg/asterisk.svg').get_pixbuf()
+    self.pixbufs["KEY_LESS"] = Gtk.Image(file='svg/less.svg').get_pixbuf()
+    self.pixbufs["KEY_COMMA"] = Gtk.Image(file='svg/comma.svg').get_pixbuf()
+    self.pixbufs["KEY_SEMICOLON"] = Gtk.Image(file='svg/semicolon.svg').get_pixbuf()
+    self.pixbufs["KEY_COLON"] = Gtk.Image(file='svg/colon.svg').get_pixbuf()
+    self.pixbufs["KEY_EXCLAM"] = Gtk.Image(file='svg/exclam.svg').get_pixbuf()
+
+    self.pixbufs["KEY_SUPER_R"] = Gtk.Image(file='svg/superr.svg').get_pixbuf()
+    self.pixbufs["KEY_SUPER_L"] = Gtk.Image(file='svg/superl.svg').get_pixbuf()
+    self.pixbufs["KEY_MENU"] = Gtk.Image(file='svg/menu.svg').get_pixbuf()
 
     self.pixbuf_mouse = Gtk.Image(file='svg/mouse.svg').get_pixbuf()
     self.pixbuf_mouseleft1 = Gtk.Image(file='svg/mouse-left-1.svg').get_pixbuf()
@@ -266,18 +311,17 @@ class App:
     #
     #  Normal keys: create a pixbuf from an SVG code file
     #
-    if code.startswith('KEY_') and	\
-         len(code)==5 and		\
-         code[4]>="A" and		\
-         code[4]<="Z":
+    if code.startswith('KEY_'):
       if self.show_all_keys or self.has_active_modifiers():
-        if doit:
-          svg = self.svg_key.replace('</text>',code[4]+'</text>')
-          loader = GdkPixbuf.PixbufLoader()
-          loader.write(svg.encode())
-          loader.close()
-          self.pixbuf = loader.get_pixbuf()
-        return True
+        if len(code)==5 and code[4]>="A" and code[4]<="Z":
+          if doit:
+#            svg = self.svg_key.replace('</text>',code[4]+'</text>')
+            svg = self.svg_key.replace('[]',code[4])
+            loader = GdkPixbuf.PixbufLoader()
+            loader.write(svg.encode())
+            loader.close()
+            self.pixbuf = loader.get_pixbuf()
+          return True
     #
     #  Process special keys
     #
@@ -445,6 +489,7 @@ class App:
 if __name__ == '__main__':
   try:
     App()
+    App.show_all_keys = True
     Gtk.main()
   except KeyboardInterrupt:
     pass

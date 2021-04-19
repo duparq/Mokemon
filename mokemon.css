@@ -10,11 +10,11 @@
 /* } */
 
 
-box {
-    border: 2px solid rgba(0,0,0,0);
-    /* opacity: 0.5 ; */
-    padding: 0px;
-}
+/* box { */
+/*     border: 2px solid rgba(0,0,0,0); */
+/*     /\* opacity: 0.5 ; *\/ */
+/*     padding: 0px; */
+/* } */
 
 /* frame { */
 /*     border: 2px solid blue; */
@@ -29,4 +29,12 @@ box {
 /* image { */
 /*     border: 2px solid black; */
 /*     /\* padding: 0px; *\/ */
+/* } */
+
+/* #mouse_off { */
+/*     opacity:0.5; */
+/* } */
+
+/* #mouse_on { */
+/*     opacity:1.0; */
 /* } */

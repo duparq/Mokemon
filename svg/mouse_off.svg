@@ -1,0 +1,74 @@
+<svg width="40px" height="48px">
+  <defs>
+    <linearGradient
+	id="LG1"
+	x1="193.62866" y1="161.64733" x2="193.62815" y2="162.41746"
+	gradientUnits="userSpaceOnUse"
+	spreadMethod="reflect"
+	gradientTransform="scale(0.6636838,1.5067416)">
+      <stop offset="0" style="stop-color:#333333;stop-opacity:1;" />
+      <stop offset="1" style="stop-color:#ffffff;stop-opacity:1;" />
+    </linearGradient>
+    <radialGradient
+	id="RG1"
+	cx="85.527827" cy="170.14385" fx="85.527827" fy="170.14385" r="252.08369"
+	spreadMethod="reflect"
+	gradientTransform="matrix(0.15552064,0,0,0.18143897,-4.5597628,-20.653753)"
+	gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop offset="1" style="stop-color:#666;stop-opacity:1;" />
+    </radialGradient>
+    <radialGradient
+	id="RG2"
+	fy="181.62012" fx="193.40065" r="68.141407" cy="181.62012" cx="193.40065"
+	gradientTransform="scale(0.67783439,1.4752866)"
+	spreadMethod="reflect"
+	gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color:#ffffff;stop-opacity:1;" />
+      <stop offset="1" style="stop-color:#666;stop-opacity:1;" />
+    </radialGradient>
+    <radialGradient
+	id="RG3"
+	fy="168.12007" fx="159.49144" r="30.63846" cy="168.12007" cx="159.49144"
+	spreadMethod="reflect"
+	gradientTransform="scale(0.6636838,1.5067416)"
+	gradientUnits="userSpaceOnUse">
+      <stop offset="0" style="stop-color:#b3b3eb;stop-opacity:0;" />
+      <stop offset="1" style="stop-color:#000000;stop-opacity:1;" />
+    </radialGradient>
+  </defs>
+  <g style="stroke:black;stroke-width:0.6;opacity:0.5">
+    <!-- contour -->
+    <path style="fill:url(#RG1);stroke-width:0.1"
+	  d="m 20.505084,47.251268 c -15.6105918,0 -17.9707368,-8.607578
+	     -17.8092718,-11.334646 l 0,0 0,0 0,0 0,0 0,0 C 2.9361352,33.344436
+	     3.1360452,22.997507 2.4464862,14.28496 2.6221862,4.7631449
+	     14.334068,4.9907449 20.502472,4.9907449 c 6.168368,0
+	     17.880248,-0.2276 18.055948,9.2942151 -0.68954,8.712547
+	     -0.48964,19.059476 -0.24933,21.631107 l 0,0 0,0 0,0 0,0 0,0 c
+	     0.1615,2.727066 -2.19866,11.334645 -17.809251,11.334645" />
+    <!-- roller background -->
+    <path style="fill:url(#RG2);stroke:none"
+	  transform="matrix(0.20896473,0,0,0.1645892,-4.1340018,-28.904556)"
+	  d="m 133.75,254.93353 a 15.9375,34.6875 0 1 1 -31.875,0 15.9375,34.6875
+	     0 1 1 31.875,0 z" />
+    <!-- vertical button separator -->
+    <path d="m 20.50031,5.0468499 0,15.6982101" />
+    <!-- left button separator -->
+    <path d="m 20.454314,20.737185 c -17.5515628,0 -17.0859288,0.43648
+	     -17.6104628,0.519221" />
+    <!-- right button separator -->
+    <path d="m 20.50031,20.736747 c 17.72707,0 17.66581,0.617889
+	     17.66581,0.617889" />
+    <!-- roller -->
+    <path style="fill:url(#LG1);stroke:none"
+	  transform="matrix(0.21314407,0,0,0.13238698,-4.5597668,-21.067467)"
+	  d="m 129.375,257.12103 a 11.5625,26.25 0 1 1 -23.125,0 11.5625,26.25 0
+	     1 1 23.125,0 z" />
+    <!-- roller -->
+    <path style="fill:url(#RG3);stroke:none"
+	  transform="matrix(0.21314407,0,0,0.13238698,-4.5597668,-21.067467)"
+	  d="m 129.375,257.12103 a 11.5625,26.25 0 1 1 -23.125,0 11.5625,26.25 0
+	     1 1 23.125,0 z" />
+  </g>
+</svg>

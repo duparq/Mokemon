@@ -40,16 +40,6 @@ import time
 import xlib
 
 
-#  Draw pixbuf p1 over pixbuf p0, result in p0.
-#
-def merge_pixbuf ( p0, p1 ):
-  p1.composite( p0,
-                0, 0, p0.props.width, p0.props.height,  # x, y, w, h
-                0, 0,                                   # offset x, y
-                1.0, 1.0,                               # scale x, y
-                GdkPixbuf.InterpType.BILINEAR, 255 )
-
-
 #  Create a transparent window
 #
 class TransparentWindow(Gtk.Window):
@@ -82,6 +72,13 @@ class Modifier(Gtk.Image):
 class App:
   def __init__(self):
 
+    #  Splash window placement
+    #
+    self.cx = 1
+    self.cy = 0
+    self.rx = 1
+    self.ry = 0
+
     #  Used paths are relative to this file's directory
     #
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -89,17 +86,17 @@ class App:
     #  A transparent window for the app icon over the desktop
     #
     self.iconwindow = TransparentWindow( accept_focus=False,
-                                     resizable=False,
-                                     decorated=False,
-                                     skip_taskbar_hint=True )
-    cssProvider = Gtk.CssProvider()
-    cssProvider.load_from_path("mokemon.css")
-    Gtk.StyleContext.add_provider_for_screen(self.iconwindow.get_screen(),
-                                             cssProvider,
-                                             Gtk.STYLE_PROVIDER_PRIORITY_USER);
+                                         resizable=False,
+                                         decorated=False,
+                                         skip_taskbar_hint=True )
+    # cssProvider = Gtk.CssProvider()
+    # cssProvider.load_from_path("mokemon.css")
+    # Gtk.StyleContext.add_provider_for_screen( self.iconwindow.get_screen(),
+    #                                           cssProvider,
+    #                                           Gtk.STYLE_PROVIDER_PRIORITY_USER );
     self.iconwindow.set_keep_above(True)
 
-    self.iconwindow.add( Gtk.Image(file='svg/mouse-svg.svg') ) # Icon
+    self.iconwindow.add( Gtk.Image(file='svg/mouse.svg') ) # Icon
 
     self.iconwindow.connect('button-press-event', self.on_iconbtnpress)
     self.iconwindow.connect('button-release-event', self.on_iconbtnrelease)
@@ -116,20 +113,6 @@ class App:
     self.hbox = Gtk.HBox(homogeneous=False, spacing=0)
     self.splash.add( self.hbox )
     self.hbox.show()
-
-    self.modifiers = {}
-    self.modifiers['ALT'] = Modifier(self.hbox,'svg/alt.svg')
-    self.modifiers['ALTGR'] = Modifier(self.hbox,'svg/altgr.svg')
-    self.modifiers['CONTROL'] = Modifier(self.hbox,'svg/ctrl.svg')
-    self.modifiers['SHIFT'] = Modifier(self.hbox,'svg/shift.svg')
-    self.modifiers['CAPSLOCK'] = Modifier(self.hbox,'svg/capslock.svg')
-
-    #  Splash window placement
-    #
-    self.cx = 1
-    self.cy = 0
-    self.rx = 1
-    self.ry = 0
 
     #  A rectangle for splash window placement debugging
     #
@@ -148,9 +131,20 @@ class App:
 
     self.splash_mouse = Gtk.Image()
     self.hbox.add( self.splash_mouse )
+    #self.splash_mouse.set_name("mouse")
+    self.splash_mouse.show()
 
     self.splash_key = Gtk.Image()
     self.hbox.add( self.splash_key )
+
+    #  Modifiers
+    #
+    self.modifiers = {}
+    self.modifiers['ALT'] = Modifier(self.hbox,'svg/alt.svg')
+    self.modifiers['ALTGR'] = Modifier(self.hbox,'svg/altgr.svg')
+    self.modifiers['CONTROL'] = Modifier(self.hbox,'svg/ctrl.svg')
+    self.modifiers['SHIFT'] = Modifier(self.hbox,'svg/shift.svg')
+    self.modifiers['CAPSLOCK'] = Modifier(self.hbox,'svg/capslock.svg')
 
     #  Dictionnary of pixbufs for temporarily displayed keys
     #
@@ -158,6 +152,7 @@ class App:
     self.pixbufs["KEY_BACKSPACE"] = Gtk.Image(file='svg/backspace.svg').get_pixbuf()
     self.pixbufs["KEY_ESCAPE"] = Gtk.Image(file='svg/esc.svg').get_pixbuf()
     self.pixbufs["KEY_TAB"] = Gtk.Image(file='svg/tab.svg').get_pixbuf()
+    self.pixbufs["KEY_SPACE"] = Gtk.Image(file='svg/space.svg').get_pixbuf()
 
     self.pixbufs["KEY_INSERT"] = Gtk.Image(file='svg/inser.svg').get_pixbuf()
     self.pixbufs["KEY_DELETE"] = Gtk.Image(file='svg/delete.svg').get_pixbuf()
@@ -218,7 +213,8 @@ class App:
     self.pixbufs["KEY_SUPER_L"] = Gtk.Image(file='svg/superl.svg').get_pixbuf()
     self.pixbufs["KEY_MENU"] = Gtk.Image(file='svg/menu.svg').get_pixbuf()
 
-    self.pixbuf_mouse = Gtk.Image(file='svg/mouse.svg').get_pixbuf()
+    self.pixbuf_mouse_on = Gtk.Image(file='svg/mouse_on.svg').get_pixbuf()
+    self.pixbuf_mouse_off = Gtk.Image(file='svg/mouse_off.svg').get_pixbuf()
     self.pixbuf_mouseleft1 = Gtk.Image(file='svg/mouse-left-1.svg').get_pixbuf()
     self.pixbuf_mouseleft2 = Gtk.Image(file='svg/mouse-left-2.svg').get_pixbuf()
     self.pixbuf_mouseleft3 = Gtk.Image(file='svg/mouse-left-3.svg').get_pixbuf()
@@ -238,6 +234,8 @@ class App:
     self.dragstate = 0
     self.btntimes = []
     self.keytime = 0
+
+    self.hide_mouse()
 
     #  Listen to window events
     #
@@ -275,7 +273,7 @@ class App:
   #  Set the position of the splash window somewhere around the mouse pointer
   #
   def check_resize(self, foo=0):
-    OFF = 20
+    off = self.distance
     x, y = self.mousepos
     w, h = self.splash.get_size()
 
@@ -292,17 +290,17 @@ class App:
     if self.rx == 0 or abs(self.ry / self.rx) <= 1:
       if self.rx >= 0:
         # info("CASE 1")
-        self.splash.move( x-w-OFF, y-h/2-(h/2+OFF)*(self.ry/self.rx) )
+        self.splash.move( x-w-off, y-h/2-(h/2+off)*(self.ry/self.rx) )
       else:
         # info("CASE 2")
-        self.splash.move( x  +OFF, y-h/2+(h/2+OFF)*(self.ry/self.rx) )
+        self.splash.move( x  +off, y-h/2+(h/2+off)*(self.ry/self.rx) )
     else:
       if self.ry >= 0:
         # info("CASE 3")
-        self.splash.move( x-w/2-(w/2+OFF)*(self.rx/self.ry), y-h-OFF )
+        self.splash.move( x-w/2-(w/2+off)*(self.rx/self.ry), y-h-off )
       else:
         # info("CASE 4")
-        self.splash.move( x-w/2+(w/2+OFF)*(self.rx/self.ry), y  +OFF )
+        self.splash.move( x-w/2+(w/2+off)*(self.rx/self.ry), y  +off )
 
 
   #  Find a pixbuf for the given key code
@@ -315,7 +313,6 @@ class App:
       if self.show_all_keys or self.has_active_modifiers():
         if len(code)==5 and code[4]>="A" and code[4]<="Z":
           if doit:
-#            svg = self.svg_key.replace('</text>',code[4]+'</text>')
             svg = self.svg_key.replace('[]',code[4])
             loader = GdkPixbuf.PixbufLoader()
             loader.write(svg.encode())
@@ -331,7 +328,25 @@ class App:
         return True
     return False
 
-  
+  #  Hide splash mouse
+  #    Reset the image to 'pixbuf_mouse_off'
+  #
+  def hide_mouse(self):
+    self.splash_mouse.set_from_pixbuf(self.pixbuf_mouse_off)
+
+  #  Show splash mouse
+  #    Draw pixbuf 'p1' over 'pixbuf_mouse_on'
+  #
+  def show_mouse(self,p1):
+    p0 = self.pixbuf_mouse_on.copy()
+    p1.composite( p0,
+                  0, 0, p0.props.width, p0.props.height,  # x, y, w, h
+                  0, 0,                                   # offset x, y
+                  1.0, 1.0,                               # scale x, y
+                  GdkPixbuf.InterpType.BILINEAR, 255 )
+    self.splash_mouse.set_from_pixbuf(p0)
+    #self.splash_mouse.get_style_context().add_class("on")
+
   #  Process window events (X Window)
   #
   def on_idle(self):
@@ -395,39 +410,27 @@ class App:
         #
         elif ev.code.startswith('BTN_LEFT'):
           if ev.value == 1:
-            p0 = self.pixbuf_mouse.copy()
-            if len(self.btntimes)==2 and t-self.btntimes[0] < 0.2:
+            if len(self.btntimes)==2 and t-self.btntimes[0] < self.btnrepeat:
               self.btntimes.append(t)
-              p1 = self.pixbuf_mouseleft2
-            elif len(self.btntimes)==4 and t-self.btntimes[2] < 0.2:
+              self.show_mouse(self.pixbuf_mouseleft2)
+            elif len(self.btntimes)==4 and t-self.btntimes[2] < self.btnrepeat:
               self.btntimes.append(t)
-              p1 = self.pixbuf_mouseleft3
+              self.show_mouse(self.pixbuf_mouseleft3)
             else:
               self.btntimes = [t]
-              p1 = self.pixbuf_mouseleft1
-            merge_pixbuf( p0, p1 )
-            self.splash_mouse.set_from_pixbuf(p0)
-            self.splash_mouse.show()
+              self.show_mouse(self.pixbuf_mouseleft1)            
           else:
             self.btntimes.append(t)
         elif ev.code.startswith('BTN_MIDDLE'):
           if ev.value == 1:
             self.btntimes = [t]
-            p0 = self.pixbuf_mouse.copy()
-            p1 = self.pixbuf_mousemiddle1
-            merge_pixbuf( p0, p1 )
-            self.splash_mouse.set_from_pixbuf(p0)
-            self.splash_mouse.show()
+            self.show_mouse(self.pixbuf_mousemiddle1)
           else:
             self.btntimes.append(t)
         elif ev.code.startswith('BTN_RIGHT'):
           if ev.value == 1:
             self.btntimes = [t]
-            p0 = self.pixbuf_mouse.copy()
-            p1 = self.pixbuf_mouseright1
-            merge_pixbuf( p0, p1 )
-            self.splash_mouse.set_from_pixbuf(p0)
-            self.splash_mouse.show()
+            self.show_mouse(self.pixbuf_mouseright1)
           else:
             self.btntimes.append(t)
         else:
@@ -439,18 +442,10 @@ class App:
         if ev.code.startswith('REL_WHEEL'):
           if ev.value == 1:
             self.btntimes = [t, t+0.1]
-            p0 = Gtk.Image(file='svg/mouse.svg').get_pixbuf()
-            p1 = self.pixbuf_mousefwd
-            merge_pixbuf( p0, p1 )
-            self.splash_mouse.set_from_pixbuf(p0)
-            self.splash_mouse.show()
+            self.show_mouse(self.pixbuf_mousefwd)
           elif ev.value == -1:
             self.btntimes = [t, t+0.1]
-            p0 = Gtk.Image(file='svg/mouse.svg').get_pixbuf()
-            p1 = self.pixbuf_mousebwd
-            merge_pixbuf( p0, p1 )
-            self.splash_mouse.set_from_pixbuf(p0)
-            self.splash_mouse.show()
+            self.show_mouse(self.pixbuf_mousebwd)
       #
       #  Unknown
       #
@@ -462,14 +457,15 @@ class App:
     #
     if len(self.btntimes)%2 == 0 and \
        len(self.btntimes)>0 and \
-       t-self.btntimes[-2] > 0.33:
-      self.splash_mouse.hide()
+       t-self.btntimes[-2] > self.timeout:
+      #self.splash_mouse.hide()
+      self.hide_mouse()
       self.btntimes=[]
       return True
 
     #  Hide key after a delay
     #
-    if self.keytime>0 and t-self.keytime > 0.33:
+    if self.keytime>0 and t-self.keytime > self.timeout:
       self.splash_key.hide()
       self.keytime = 0
 
@@ -490,6 +486,9 @@ if __name__ == '__main__':
   try:
     App()
     App.show_all_keys = True
+    App.distance = 10		# How far away the splash is shown
+    App.timeout = 0.25		# How long the splash is shown
+    App.btnrepeat = 0.2		# Max time between multi-clicks
     Gtk.main()
   except KeyboardInterrupt:
     pass
